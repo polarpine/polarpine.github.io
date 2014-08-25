@@ -1,0 +1,299 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>SQL Injection &#8211; Polarpine's Coding Adventure</title>
+<meta name="description" content="One potential vunerability with SQL.">
+<meta name="keywords" content="SQL Injection Issues, DBC, Technical">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="SQL Injection">
+<meta name="twitter:description" content="One potential vunerability with SQL.">
+<meta name="twitter:site" content="@poisonousfroad">
+<meta name="twitter:creator" content="@poisonousfroad">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/pinetrees.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL Injection">
+<meta property="og:description" content="One potential vunerability with SQL.">
+<meta property="og:url" content="/blog/SQL-Injection/">
+<meta property="og:site_name" content="Polarpine's Coding Adventure">
+
+
+
+
+
+<link rel="canonical" href="/blog/SQL-Injection/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Polarpine's Coding Adventure Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		        
+		    <li><a href="http://localhost:4000/" target="_blank">Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/blog/" >Blog</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/projects/" >Projects</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	<div class="wrap">
+        
+    		<a href="" class="site-logo" rel="home" title="Polarpine's Coding Adventure"><img src="/images/pinetrees.png" width="200" height="200" alt="Polarpine's Coding Adventure logo" class="animated fadeInUp"></a>
+        
+        <h1 class="site-title animated fadeIn"><a href="/">Polarpine's Coding Adventure</a></h1>
+		<h2 class="site-description animated fadeIn" itemprop="description">Charting my journey through DBC.</h2>
+	</div>
+</header><!-- /.masthead -->
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#SQL Injection Issues" title="Pages tagged SQL Injection Issues">SQL Injection Issues</a>&nbsp;&bull;&nbsp;<a href="/tags/#DBC" title="Pages tagged DBC">DBC</a>&nbsp;&bull;&nbsp;<a href="/tags/#Technical" title="Pages tagged Technical">Technical</a></span>
+        
+          <h1 class="entry-title">SQL Injection</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/profile-pic.jpg" class="bio-photo" alt="Polarpine bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Polarpine</span></span>
+        <span class="entry-date date published"><time datetime="2014-08-10T00:00:00-07:00"><i class="fa fa-calendar-o"></i> August 10, 2014</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=SQLInjectionIssues,DBC,Technical&text=SQL%20Injection&url=/blog/SQL-Injection/&via=poisonousfroad" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/blog/SQL-Injection/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/blog/SQL-Injection/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <p>To explain what SQL Injection Issues are, we need to take a step back and look at what SQL is and what it can do.  SQL or Structured Query Language is a programming language designed to access and manipulate databases.  SQL views the entire world through the lens of a table.  Everything it organizes, adds, removes, queries, is in the form of a table. It sounds pretty simple yet it had powerful implications because SQL is so widely used. </p>
+
+<p>Let’s look at a simple example fo how SQL would access a database.  Imagine you’re in a monthly book club. This book club has a database associated with it ‘cause one of your members just happens to be an overzealous code-monkey.  Stored in your book club database are: </p>
+
+<ul>
+  <li>book club members</li>
+  <li>books you’ve read</li>
+  <li>authors</li>
+  <li>books you want to read</li>
+  <li>who’s hosting the meeting</li>
+  <li>how many times Sharon’s brought that damn tuna casserole</li>
+  <li>whether a book has been made into a movie (transfer to movie club!)</li>
+</ul>
+
+<p>Now, you want to access the database to see when you’re supposed to be hosting this rotating shindig.  Conveniently, your valued code-monkey set up an online interface where you can put your name into a field labeled ‘when am I hosting?’ and it returns a lists of dates.</p>
+
+<p>SQL is the go-between in this instance that takes what you fed in, your name, and returned a value based on pre-set values. In SQL you just asked something like this:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">SELECT</span> <span class="n">host_date</span>
+<span class="no">FROM</span> <span class="n">book_club</span>
+<span class="no">WHERE</span> <span class="n">book_club_member</span> <span class="o">=</span> <span class="s1">&#39;Sharon&#39;</span><span class="p">;</span></code></pre></div>
+
+<p>In the above code, SQL searches from the <strong>TABLE</strong> ‘book_club’ and returns values WHERE ‘book_club_member’ equals ‘Sharon’.  Meaning, if and when your name matches a date in the ‘host_date’ column it will return or <strong>SELECT</strong> that value for you.</p>
+
+<p>That’s all fine and good though see that tricky little semi-colon? It signals to SQL that the command is closed.  What if instead of passing in your name, <code>Sharon</code>,  into the database, you decided to put <code>foo';DROP TABLE book_club</code>? Note the added semi-colon into the entry. SQL reads your query as:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">SELECT</span> <span class="n">host_date</span>
+<span class="no">FROM</span> <span class="n">book_club</span>
+<span class="no">WHERE</span> <span class="n">book_club_member</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span> <span class="no">DROP</span> <span class="no">TABLE</span> <span class="n">book_club</span><span class="p">;</span><span class="err">&#39;</span></code></pre></div>
+
+<p>Or put more explicitly</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">SELECT</span> <span class="n">host_date</span>
+<span class="no">FROM</span> <span class="n">book_club</span>
+<span class="no">WHERE</span> <span class="n">book_club_member</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span> 
+
+<span class="no">DROP</span> <span class="no">TABLE</span> <span class="n">book_club</span><span class="p">;</span><span class="err">&#39;</span></code></pre></div>
+
+<p>SQL is holding two commands, first <strong>SELECT</strong> items that match your query in <strong>TABLE</strong> ‘book_club’, second <strong>DROP TABLE</strong> ‘book_club’.  Essentially what this will do is find a null value for your query request (unless foo is in your book club), then move on to the next command <strong>DROP TABLE</strong>.  Deleting the table containing all the data for ‘book_club’.  Goodbye Sharon’s casserole count. Hello angry code-monkey.</p>
+
+<p>Losing your book club information may not be too dire, losing all your banking information would be.  If a database accepting user input is not sanitizing this input, removing malicious characters, it could be vulnerable to SQL injection hacking.</p>
+
+<p>There are a few simple things coders can do to combat SQL Injections.  First would be limiting access to databases the the bare minimum required to perform the tasks.  Users unlikely need the ability to update or delete tables.  Take this away.  Second would be managing how data is stored. Not keeping all data in one big pool. Segregate data into smaller functional groups.  The third, and perhaps most important, sanitize user input.  There are a couple of different ways to to this but ultimately it limits what kind of characters or sets of characters can be passed into SQL.  This can be done by escaping certain characters, setting parameterized querries (creating a go-between from the user to the database), and pattern matching.</p>
+
+<p>SQL Injections present a very real threat if not properly mitigated. It’s important that time and thought go into database management and access reducing the risk of SQL Injections and limiting vulnerabilities.</p>
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/blog/wireframing/" class="btn" title="Wireframing">Previous</a>
+          
+          
+            <a href="/blog/computers-and-transistors/" class="btn" title="Computers and Transistors">Next</a>
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2014 Polarpine.</span>
+<div class="social-icons">
+	<a href="http://twitter.com/poisonousfroad" title="Polarpine on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://facebook.com/vbiggers" title="Polarpine on Facebook" target="_blank"><i class="fa fa-facebook-square fa-2x"></i></a>
+	
+	<a href="http://linkedin.com/in/vbiggers" title="Polarpine on LinkedIn" target="_blank"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	
+	
+	
+	<a href="http://github.com/polarpine" title="Polarpine on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+	
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

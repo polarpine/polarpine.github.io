@@ -1,0 +1,30 @@
+[
+	
+		{
+		  "title"      : "Computers and Transistors",
+		  "category"   : "",
+      "tags"       : "transistors, DBC, and technical",
+		  "url"        : "/blog/computers-and-transistors/",
+		  "date"       : "2014-08-17 00:00:00 -0700",
+		  "shortdate"  : "August 17, 2014"
+		} ,
+	
+		{
+		  "title"      : "SQL Injection",
+		  "category"   : "",
+      "tags"       : "SQL Injection Issues, DBC, and Technical",
+		  "url"        : "/blog/SQL-Injection/",
+		  "date"       : "2014-08-10 00:00:00 -0700",
+		  "shortdate"  : "August 10, 2014"
+		} ,
+	
+		{
+		  "title"      : "Wireframing",
+		  "category"   : "",
+      "tags"       : "wireframing, DBC, and technical",
+		  "url"        : "/blog/wireframing/",
+		  "date"       : "2014-07-06 00:00:00 -0700",
+		  "shortdate"  : "July 06, 2014"
+		} 
+	
+]
